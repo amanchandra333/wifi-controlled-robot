@@ -2,6 +2,7 @@ package in.amanchandra.botsocketcontrol;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Handler;
 
 /**
  * Created by root on 3/6/17.
@@ -28,6 +30,7 @@ public class Interface extends AppCompatActivity {
     private Button forward,backward,left,right,armx,army,armz;
     private Switch onOffSwitch;
     private SeekBar seekbar;
+    public int pwm = 10;
 
 
     @Override
@@ -70,6 +73,8 @@ public class Interface extends AppCompatActivity {
         });
         control.start();
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     @Override
@@ -111,14 +116,84 @@ public class Interface extends AppCompatActivity {
             }
 
         });
-        forward.setOnClickListener(new View.OnClickListener() {
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void onProgressChanged(SeekBar seek, int progress, boolean fromUser) {
+                pwm=progress;
+            }
+        });
+
+        forward.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (out != null) {
-                    out.print("F");
+                    out.print("F"+pwm);
                     out.flush();
                 }
             }
-        });
+        }));
+        backward.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (out != null) {
+                    out.print("B"+pwm);
+                    out.flush();
+                }
+            }
+        }));
+        left.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (out != null) {
+                    out.print("L"+pwm);
+                    out.flush();
+                }
+            }
+        }));
+        right.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (out != null) {
+                    out.print("R"+pwm);
+                    out.flush();
+                }
+            }
+        }));
+        armx.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (out != null) {
+                    out.print("X");
+                    out.flush();
+                }
+            }
+        }));
+        army.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (out != null) {
+                    out.print("Y");
+                    out.flush();
+                }
+            }
+        }));
+        armz.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (out != null) {
+                    out.print("Z");
+                    out.flush();
+                }
+            }
+        }));
     }
 }

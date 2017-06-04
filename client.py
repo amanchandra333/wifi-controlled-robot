@@ -32,10 +32,10 @@ class client(Thread):
                 print "recieved B"
                 #...
             else :
-                print "blah blah blah"
+                print (pos)
                 #...
             self.sock.send("recieved"+'\n')
-	    time.sleep(1)
+
 
 def main():
     serversocket.listen(5)
