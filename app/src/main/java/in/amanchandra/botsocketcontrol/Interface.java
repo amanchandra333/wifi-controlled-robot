@@ -17,10 +17,6 @@ import java.io.PrintWriter;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Handler;
 
-/**
- * Created by root on 3/6/17.
- */
-
 public class Interface extends AppCompatActivity {
     String IP;
     int port;
@@ -65,7 +61,7 @@ public class Interface extends AppCompatActivity {
                             confirm = in.readLine();
                         Thread.sleep(20);
                     }
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -73,8 +69,8 @@ public class Interface extends AppCompatActivity {
         });
         control.start();
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
     }
 
     @Override
@@ -135,64 +131,107 @@ public class Interface extends AppCompatActivity {
         forward.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("F"+pwm);
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("F" + pwm);
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
             }
         }));
         backward.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("B"+pwm);
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("B"+pwm);
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
+
             }
         }));
         left.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("L"+pwm);
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("L"+pwm);
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
             }
         }));
         right.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("R"+pwm);
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("R"+pwm);
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
             }
         }));
         armx.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("X");
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("X");
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
             }
         }));
         army.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("Y");
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("Y");
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
             }
         }));
         armz.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (out != null) {
-                    out.print("Z");
-                    out.flush();
-                }
+                Thread command = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            out.print("Z");
+                            out.flush();
+                        }
+                    }
+                });
+                command.start();
             }
         }));
     }
